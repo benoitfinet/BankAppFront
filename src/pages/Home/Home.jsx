@@ -1,6 +1,4 @@
 import './home.scss';
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
 import iconChat from '../../assets/icon-chat.png'
 import iconMoney from '../../assets/icon-money.png'
 import iconSecurity from '../../assets/icon-security.png'
@@ -10,7 +8,6 @@ import ItemContentHome from '../../components/ItemContentHome/ItemContentHome';
 function Home() {
     return (
         <div>
-            <Header />
             <main>
                 <TextContentBanner />
                 <section className="features">
@@ -33,7 +30,6 @@ function Home() {
                     />
                 </section>
             </main>
-            <Footer />
         </div>
     );
 }

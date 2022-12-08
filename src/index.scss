@@ -37,8 +37,9 @@ body {
 }
 
 .main {
-    flex: 1;
-    height: 80vh;
+    min-height: calc(80vh - 50px);
+    padding-bottom: 1em;
+    padding-top: 1em;
 }
 
 .bg-dark {
