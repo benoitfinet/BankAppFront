@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { axiosPutUser } from '../../utils/callingApi';
 import * as connectionActions from '../../features/connection';
+import { useNavigate } from 'react-router';
 
 function User() {
 
@@ -14,18 +15,26 @@ function User() {
     const [lastName, setLastName] = useState()
     const [displayEditName, setdisplayEditName] = useState(false)
     const dispatch = useDispatch()
+    let navigate = useNavigate()
+    let firstNameInputContent = document.getElementById('firstName')
+    let lastNameInputContent = document.getElementById('lastName')
+
+    function notConnected() {
+        navigate('/login')
+    }
+
 
     function displayFormEdit() {
-
         setdisplayEditName(!displayEditName)
     }
+
     async function editUser() {
         const axios = await axiosPutUser(stateReduxToken, { firstName, lastName })
         dispatch(connectionActions.getUser({ firstName: axios.firstName, lastName: axios.lastName }))
         setdisplayEditName(!displayEditName)
     }
+
     if (stateReduxToken) {
-        console.log("connected YES !")
         return (
             <div>
                 <main className="main bg-dark">
@@ -47,10 +56,10 @@ function User() {
                                             </label>
                                         </div>
                                         <div className='form-second-line'>
-                                            <button type='button' className='buttonChangeName' onClick={() => editUser()}>
+                                            <button type='button' className='buttonChangeName' onClick={firstNameInputContent === null || lastNameInputContent === null ? displayFormEdit : editUser}>
                                                 Save
                                             </button>
-                                            <button type='button' className='buttonChangeName' onClick={() => displayFormEdit()}>
+                                            <button type='button' className='buttonChangeName' onClick={displayFormEdit}>
                                                 Cancel
                                             </button>
                                         </div>
@@ -99,7 +108,14 @@ function User() {
             </div>
         );
     } else {
-        console.log("not connected")
+        return (
+            <div>
+                <p>
+                    You must be connected to access this page
+                </p>
+                <button onClick={() => notConnected()}>Go to the log in page</button>
+            </div>
+        )
     }
 }
 
